@@ -2,6 +2,8 @@
 
 The purpose of Circalog is to store any kind of circadian periodic schedule data. Hence, although the primary goal is not to define a generic data format, the data format aims to be as generalizable and agnostic as possible to be able to encode as much periodic data as possible.
 
+The specification is intended as a working document for now, it is subject to change depending on the needs that arise during software development.
+
 Draft version: 0.5
 
 ## Fields
