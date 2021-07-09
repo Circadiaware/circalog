@@ -4,13 +4,15 @@ The purpose of Circalog is to store any kind of circadian periodic schedule data
 
 The specification is intended as a working document for now, it is subject to change depending on the needs that arise during software development.
 
-Draft version: 0.5.1
+Draft version: 0.5.2
 
 ## Fields
 
-### Table: Events
+### Table: event
 
 This table stores instances of events with temporal and contextual information.
+
+Note that there is no concept of naps or duration or fragmented sleep or other secondary inferential metrics. There are two reasons: 1) they can be done at post-processing from the fields collected, so it's unnecessary to calculate them at the collection app level and clutter the database and slow down the plotting and exports processes, 2) there is no single method to accurately calculate them, different methods will produce different results, so it is best to leave that to the post-processing stage. Nevertheless, some of these secondary metrics can still be collected in the app, eg, for naps, a tag "Nap" can be created to allow the user to specify if they think this was a nap or not (although this may be very unreliable) or to import from other apps such as Sleepmeter which considers naps as a distinct type of sleep session. Fragmented sleep will just consists of several `event` records, they can be "stitched" together at post-processing time. Duration can simply be calculated using `end_time` - `start_time`, and combined with stitching, a duration over multiple fragmented but closely temporally related sleep sessions can be calculated in post-processing.
 
 #### id
 
