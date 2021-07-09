@@ -9,4 +9,4 @@ This app is intended to both end-users (patients) and clinicians and research in
 
 The app will be developed with react-native and typescript.
 
-Circalog sleep diary format specification, intended to be generic to store a maximum of pertinent data for any kind of circadian periodic event, is readable here: [https://github.com/Circadiaware/circalog/docs/circalog-format-spec.md](https://github.com/Circadiaware/circalog/docs/circalog-format-spec.md)
+Circalog sleep diary format specification, intended to be generic to store a maximum of pertinent data for any kind of circadian periodic event, is readable here: https://github.com/Circadiaware/circalog/blob/main/docs/circalog-format-spec.md
