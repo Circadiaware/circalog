@@ -144,6 +144,58 @@ Name of the option. SQL key.
 
 Multi types. Stores the value for the option.
 
+#### #### (WIP) Table: subquestions
+
+This table aims to allow sleep clinic operators and users to define their own set of qualitative scales, such as sleep quality, mood, etc.
+
+These subquestions can be displayed/linked to any `event_type`. The link will be added in `event_type` as an `event_type.additional_data` field: `subquestions=1;3;5;6` where the integers are the list of the subquestions `short_id`. Then, when an `event` record is saved, the answers to subquestions will also be saved in `event.additional_data` with a similar formatting.
+
+The app chooses how to display subquestions, either after ending an `event` record, or they can be integrated in the GUI when editing an `event` record just as if the subquestions were part of the `event` widgets (eg, like Sleepmeter's Sleep Quality widget).
+
+#### id
+
+Unique hash from current timestamp, to allow for easy merge.
+
+#### short_id
+
+Integer. Will be used to link in `subquestions`, instead of `id` which will consume much more storage space and will be humanly unreadable.
+
+#### order_id
+
+Integer. Will be solely used to order the appearances of subquestions.
+
+#### name
+
+String. Short description of the question, eg: "Sleep quality".
+
+#### text
+
+String of variable length. Question to display to the user, eg: "How would you rate your sleep quality?". This is optional.
+
+#### open_ended
+
+Boolean. If false (default), will display a slider with a range between `rating_range_min` and `rating_range_max`. If true, will display a textbox for the user to enter their thoughts freely which will be stored in the `comment` field.
+
+#### mandatory
+
+Boolean. If true, the user will need to fill in this subquestion to register the record. If false, the user can skip the subquestion.
+
+#### rating_range_min
+
+Integer. Minimum rating.
+
+#### rating_range_max
+
+Integer. Maximum rating.
+
+#### rating_range_invert
+
+Boolean. Inverts the rating range.
+
+#### comment
+
+String of variable length. Stores either comments to complement the range rating with `open_ended == false`, or is the only thing displayed when `open_ended == true`.
+
 ## SQL relationships diagram
 
 Relational database diagram via Mermaid:
@@ -159,6 +211,8 @@ event "many" -- "many" tags
 tap "1" --> "1" event : creates
 tap "1" -- "1" event_type
 options .. event
+subquestions .. event_type
+subquestions .. event
 
 event : Hash id (key)
 event : Datetime created_on
@@ -191,4 +245,15 @@ tap : Datetime first_tap
 
 options : String name (key)
 options : Any value
+
+subquestions : Hash id
+subquestions : Int short_id
+subquestions : Int order_id
+subquestions : Int rating_range_min
+subquestions : Int rating_range_max
+subquestions : String name
+subquestions : String text
+subquestions : Boolean open_ended
+subquestions : Boolean rating_range_invert
+subquestions : String_varlength comment
 ```
