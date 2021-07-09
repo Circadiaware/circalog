@@ -4,7 +4,7 @@ The purpose of Circalog is to store any kind of circadian periodic schedule data
 
 The specification is intended as a working document for now, it is subject to change depending on the needs that arise during software development.
 
-Draft version: 0.5
+Draft version: 0.5.1
 
 ## Fields
 
@@ -144,7 +144,7 @@ Name of the option. SQL key.
 
 Multi types. Stores the value for the option.
 
-#### #### (WIP) Table: subquestions
+#### (WIP) Table: subquestions
 
 This table aims to allow sleep clinic operators and users to define their own set of qualitative scales, such as sleep quality, mood, etc.
 
@@ -186,11 +186,15 @@ Integer. Minimum rating.
 
 #### rating_range_max
 
-Integer. Maximum rating.
+Integer. Maximum rating. If `rating_range_max` is 1 and `rating_range_min` is 0, then the choice is binary, and 0 should be represented as "No" and 1 as "Yes".
 
 #### rating_range_invert
 
 Boolean. Inverts the rating range.
+
+#### additional_data
+
+String of variable length and with a separator (default: | , eg: rating-labels=worst;bad;average;good;best|other-data=data1;data2). Used to store additional data such as rating range labels (eg, instead of rating sleep quality from 0 to 10, rate as "Not at all rested";"Slightly rested"; "Somewhat rested" etc as in the [Consensus Sleep Diary](https://doi.org/10.5665/sleep.1642)). Can also be used to store data from imported sleep diaries from other softwares that do not fit elsewhere.
 
 #### comment
 
@@ -256,4 +260,11 @@ subquestions : String text
 subquestions : Boolean open_ended
 subquestions : Boolean rating_range_invert
 subquestions : String_varlength comment
+subquestions : String_varlength additional_data
 ```
+
+## Other standard sleep diary specifications
+
+* [Consensus Sleep Diary](https://doi.org/10.5665/sleep.1642). If possible, Circalog should be a superset, and allow implementation of all 3 variants of the Consensus Sleep Diary.
+
+* [Andrew Sayers' standard sleep diary format draft](https://github.com/andrew-sayers/sleep-diary-formats/tree/main/src/Standard), with the goal of supporting imports from all major electronic sleep diary formats and provide baseline functionalities.
