@@ -82,7 +82,7 @@ String type of variable length. Stores any textual comment the user wish to spec
 
 #### additional_data
 
-String field with variable length and a separator (default: |). Stores additional data such as color for plots, or alternative labels for fields such as pre_start_time (bedtime), start_time (fall asleep time), end_time (wake up time) and post_start_time (out of bed time) to improve user experience.
+String field with variable length and a separator (default: |). Stores additional data such as color for plots, or alternative labels for fields such as pre_start_time (bedtime), start_time (fall asleep time), end_time (wake up time) and post_start_time (out of bed time) and the default values (eg, pre_start_time = 15min before start_time) to improve user experience.
 
 ### tags
 
