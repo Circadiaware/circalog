@@ -6,9 +6,9 @@ The purpose of Circalog is to store any kind of circadian periodic schedule data
 
 The specification is intended as a working document for now, it is subject to change depending on the needs that arise during software development.
 
-The database can be implemented in SQLite. The app should implement a native SQLite <--> CSV import/export function, to natively support not only exports/backups but also imports and merging, if possible the CSV should be a single file to ease exports and backups by non technical users (can easily be sent via e-mail).
+The database can be implemented in SQLite. The app should implement a native SQLite <--> CSV or JSON import/export function, to natively support not only exports/backups but also imports and merging using a standard file format that is easy to load for post-processing data analysis, if possible the CSV or JSON should be a single file to ease exports and backups by non technical users (can easily be sent via e-mail).
 
-Draft version: 0.6.2
+Draft version: 0.6.3
 
 ## SQL relationships diagram
 
