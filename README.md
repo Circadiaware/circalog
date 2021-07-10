@@ -1,6 +1,6 @@
 # Circalog
 
-<img src="docs/circalog-logo.svg" title="Circalog-logo" alt="" data-align="center">
+<div style="text-align:center"><img src="docs/circalog-logo.svg" title="Circalog-logo" alt="" data-align="center"></div>
 
 (WIP) An easy cross-platform logger for daily circadian/periodic events. Stop guessing, start understanding.
 
