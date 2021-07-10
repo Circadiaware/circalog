@@ -230,7 +230,7 @@ When syncing, the app can use `table_name` and `id` to build a subset of records
 
 Relational database diagram via Mermaid:
 
-![Circalog SQL diagram via Mermaid](sql-diagram-mermaid.png)
+![Circalog SQL diagram via Mermaid](circalog-format-spec-sql-diagram-mermaid.png)
 
 Source code (using [Mark Text](https://marktext.app/) to display and modify interactively, [GitHub is lagging behind in implementing Mermaid](https://github.community/t/feature-request-support-mermaid-markdown-graph-diagrams-in-md-files/1922)):
 
@@ -244,7 +244,7 @@ options .. event
 subquestions .. event_type
 subquestions .. event
 
-event : Hash id (key)
+event : Hash id
 event : Datetime created_on
 event : Datetime last_change
 event : Link event_type_id
@@ -256,24 +256,24 @@ event : Link[] tags_ids
 event : String_varlength comment
 event : String_varlength additional_data
 
-event_type : Hash id (key)
+event_type : Hash id
 event_type : Datetime created_on
 event_type : Datetime last_change
 event_type : Boolean punctual_or_duration_event
 event_type : String_varlength comment
 event_type : String_varlength additional_data
 
-tags : Hash id (key)
+tags : Hash id
 tags : Datetime created_on
 tags : Datetime last_change
 tags : String_varlength comment
 tags : String_varlength additional_data
 
-tap : Link event_type_id (key)
+tap : Link event_type_id
 tap : Boolean active
 tap : Datetime first_tap
 
-options : String name (key)
+options : String name
 options : Any value
 
 subquestions : Hash id
