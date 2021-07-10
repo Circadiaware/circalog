@@ -1,8 +1,8 @@
 # Circalog
 
-<div style="text-align:center"><img src="docs/circalog-logo.svg" title="Circalog-logo" alt="" data-align="center"></div>
+<p align="center"><img src="docs/circalog-logo.svg" title="Circalog-logo" alt="" data-align="center"></p>
 
-(WIP) An easy cross-platform logger for daily circadian/periodic events. Stop guessing, start understanding.
+(WIP) An easy cross-platfrm logger for daily circadian/periodic events. Stop guessing, start understanding.
 
 This app is a generalization of the concept of sleep diary, but instead of recording just sleep periods, it can record any type of event at the simple tap of a button. Events can either be an instant period (eg, drug intake time), or a duration event (eg, sleep period, with a start time and end time, which requires 2 taps). It's also possible to add tags and comments to add additional informations. Databases can be exported as simple csv files, which exports not only the events log but also the configuration (eventtypes).
 
