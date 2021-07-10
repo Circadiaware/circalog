@@ -26,7 +26,7 @@ options .. event
 subquestions .. event_type
 subquestions .. event
 
-event : Hash id
+event : Hash id %% unique key
 event : Datetime created_on
 event : Datetime last_change
 event : Link event_type_id
@@ -38,27 +38,27 @@ event : Link[] tags_ids
 event : String_varlength comment
 event : String_varlength additional_data
 
-event_type : Hash id
+event_type : Hash id %% unique key
 event_type : Datetime created_on
 event_type : Datetime last_change
 event_type : Boolean punctual_or_duration_event
 event_type : String_varlength comment
 event_type : String_varlength additional_data
 
-tags : Hash id
+tags : Hash id %% unique key
 tags : Datetime created_on
 tags : Datetime last_change
 tags : String_varlength comment
 tags : String_varlength additional_data
 
-tap : Link event_type_id
+tap : Link event_type_id %% unique key
 tap : Boolean active
 tap : Datetime first_tap
 
-options : String name
+options : String name %% unique key
 options : Any value
 
-subquestions : Hash id
+subquestions : Hash id %% unique key
 subquestions : Int short_id
 subquestions : Int order_id
 subquestions : Int rating_range_min
