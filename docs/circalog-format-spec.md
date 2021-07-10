@@ -8,7 +8,70 @@ The database can be implemented in SQLite. The app should implement a native SQL
 
 Draft version: 0.6.0
 
-## Fields
+## SQL relationships diagram
+
+Relational database diagram via Mermaid:
+
+![Circalog SQL diagram via Mermaid](circalog-format-spec-sql-diagram-mermaid.png)
+
+Source code (use [Mark Text](https://marktext.app/) to display and modify interactively, [GitHub is lagging behind in implementing Mermaid](https://github.community/t/feature-request-support-mermaid-markdown-graph-diagrams-in-md-files/1922)):
+
+```mermaid
+classDiagram
+event "many" -- "1" event_type
+event "many" -- "many" tags
+tap "1" --> "1" event : creates
+tap "1" -- "1" event_type
+options .. event
+subquestions .. event_type
+subquestions .. event
+
+event : Hash id
+event : Datetime created_on
+event : Datetime last_change
+event : Link event_type_id
+event : Datetime pre_start_time
+event : Datetime start_time
+event : Datetime end_time
+event : Datetime post_end_time
+event : Link[] tags_ids
+event : String_varlength comment
+event : String_varlength additional_data
+
+event_type : Hash id
+event_type : Datetime created_on
+event_type : Datetime last_change
+event_type : Boolean punctual_or_duration_event
+event_type : String_varlength comment
+event_type : String_varlength additional_data
+
+tags : Hash id
+tags : Datetime created_on
+tags : Datetime last_change
+tags : String_varlength comment
+tags : String_varlength additional_data
+
+tap : Link event_type_id
+tap : Boolean active
+tap : Datetime first_tap
+
+options : String name
+options : Any value
+
+subquestions : Hash id
+subquestions : Int short_id
+subquestions : Int order_id
+subquestions : Int rating_range_min
+subquestions : Int rating_range_max
+subquestions : String name
+subquestions : String text
+subquestions : Boolean open_ended
+subquestions : Boolean rating_range_invert
+subquestions : String_varlength comment
+subquestions : String_varlength additional_data
+```
+
+## Fields descriptions
 
 ### Table: event
 
@@ -225,69 +288,6 @@ String of the name of the table of the modified/created record.
 Unique id of the modified/created record since last sync.
 
 When syncing, the app can use `table_name` and `id` to build a subset of records that are new/modified by fetching the records from the referenced table and id, and then send a reduced CSV export of just this subset of records.
-
-## SQL relationships diagram
-
-Relational database diagram via Mermaid:
-
-![Circalog SQL diagram via Mermaid](circalog-format-spec-sql-diagram-mermaid.png)
-
-Source code (using [Mark Text](https://marktext.app/) to display and modify interactively, [GitHub is lagging behind in implementing Mermaid](https://github.community/t/feature-request-support-mermaid-markdown-graph-diagrams-in-md-files/1922)):
-
-```mermaid
-classDiagram
-event "many" -- "1" event_type
-event "many" -- "many" tags
-tap "1" --> "1" event : creates
-tap "1" -- "1" event_type
-options .. event
-subquestions .. event_type
-subquestions .. event
-
-event : Hash id
-event : Datetime created_on
-event : Datetime last_change
-event : Link event_type_id
-event : Datetime pre_start_time
-event : Datetime start_time
-event : Datetime end_time
-event : Datetime post_end_time
-event : Link[] tags_ids
-event : String_varlength comment
-event : String_varlength additional_data
-
-event_type : Hash id
-event_type : Datetime created_on
-event_type : Datetime last_change
-event_type : Boolean punctual_or_duration_event
-event_type : String_varlength comment
-event_type : String_varlength additional_data
-
-tags : Hash id
-tags : Datetime created_on
-tags : Datetime last_change
-tags : String_varlength comment
-tags : String_varlength additional_data
-
-tap : Link event_type_id
-tap : Boolean active
-tap : Datetime first_tap
-
-options : String name
-options : Any value
-
-subquestions : Hash id
-subquestions : Int short_id
-subquestions : Int order_id
-subquestions : Int rating_range_min
-subquestions : Int rating_range_max
-subquestions : String name
-subquestions : String text
-subquestions : Boolean open_ended
-subquestions : Boolean rating_range_invert
-subquestions : String_varlength comment
-subquestions : String_varlength additional_data
-```
 
 ## Other standard sleep diary specifications
 
