@@ -6,7 +6,7 @@ The specification is intended as a working document for now, it is subject to ch
 
 The database can be implemented in SQLite. The app should implement a native SQLite <--> CSV import/export function, to natively support not only exports/backups but also imports and merging, if possible the CSV should be a single file to ease exports and backups by non technical users (can easily be sent via e-mail).
 
-Draft version: 0.6.1
+Draft version: 0.6.2
 
 ## SQL relationships diagram
 
@@ -42,6 +42,7 @@ event_type : Hash id %% unique key
 event_type : Datetime created_on
 event_type : Datetime last_change
 event_type : Boolean punctual_or_duration_event
+event_type : Boolean enable_pre_and_post_time
 event_type : String_varlength comment
 event_type : String_varlength additional_data
 
@@ -53,7 +54,10 @@ tags : String_varlength additional_data
 
 tap : Link event_type_id %% unique key
 tap : Boolean active
+tap : Int state
 tap : Datetime first_tap
+tap : Datetime second_tap
+tap : Datetime third_tap
 
 options : String name %% unique key
 options : Any value
@@ -145,6 +149,10 @@ Standard datetime format with timezone. Same as for table Events, this is to all
 
 Boolean: false = punctual, true = duration event. A punctual event only encodes a start_time, it is a single point in time. A duration event encodes both a start_time, end_time, pre_start_time and post_end_time, it represent an event that lasted for some time. Mandatory.
 
+#### enable_pre_and_post_time
+
+Boolean: false = only `start_time` and `end_time` will be displayed, true = `pre_start_time` and `post_start_time` will be displayed too. Tap buttons will also enable additional features such as holding to start recording the `pre_start_time`.
+
 #### comment
 
 String type of variable length. Stores any textual comment the user wish to specify. Can also be used to import additional meta-data from other sleep diary apps that do not fit in other fields. Optional field.
@@ -197,21 +205,41 @@ Link to event_type's id. SQL key. There should be no more than one entry in this
 
 Boolean. States if the event is currently being recorded (true) or not (false).
 
+#### state
+
+Integer. Counts the tap stage so far. Can be decremented if a tap happens during the global option `cancel_interval` (eg, tap to start recording, then tap again under 15min, this will cancel the recording, and decrement this counter). Cancelling only works for duration event types, for punctual events these can be deleted manually by the user in the History tab.
+
 #### first_tap
 
-Datetime with timezone standard format. Records when the first tap happened. For punctual event types, the `event` record can be created asap and this entry can be deleted (or just left there lingering). For duration event types, the `event` record will be created after the second tap and by retrieving data in this entry. It's also possible to implement a feature to cancel the entry if the second tap happens too short after the first tap, eg, 15min (this should be a user definable option).
+Datetime with timezone standard format. Records when the first tap happened. For punctual event types, the `event` record can be created asap without even creating an entry here. For duration event types, the `event` record will be created after the second tap (or fourth tap if `enable_pre_and_post_time == true`) and by retrieving data in this entry. It's also possible to implement a feature to cancel the entry using a global option `cancel_interval` if the second tap happens too short after the first tap, eg, 15min (this should be a user definable option).
+
+#### second_tap
+
+Datetime with timezone standard format. Records when the second tap happened. This is only used when the `event_type` has a `enable_pre_and_post_time == true`.
+
+#### third_tap
+
+Datetime with timezone standard format. Records when the third tap happened. This is only used when the `event_type` has a `enable_pre_and_post_time == true`.
 
 ### Table: options
 
-This table stores the app options.
+This table stores the app global options, such as `cancel_interval`.
 
 #### name
 
-Name of the option. SQL key.
+Name of the option. SQL key. The name can be translated using language files outside of the SQL database, using the `option.name` as a key to find the translation.
 
 #### value
 
 Multi types. Stores the value for the option.
+
+#### description
+
+String of variable length. Describes what the field is about. This could also be stored in language files instead of the SQL database, by using placeholders such as `{option-name-description}`.
+
+#### tooltip
+
+String of variable length. More help about the field's purpose. This could also be stored in language files instead of the SQL database, by using placeholders such as `{option-name-tooltip}`.
 
 #### (WIP) Table: subquestions
 
