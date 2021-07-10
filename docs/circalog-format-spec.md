@@ -1,6 +1,6 @@
 # Circalog sleep diary format specifications
 
-<img title="Circalog-logo" src="circalog-logo.svg" alt="" data-align="center" width="91">
+<p align="center"><img title="Circalog-logo" src="circalog-logo.svg" alt="" data-align="center" width="91"></p>
 
 The purpose of Circalog is to store any kind of circadian periodic schedule data. Hence, although the primary goal is not to define a generic data format, the data format aims to be as generalizable and agnostic as possible to be able to encode as much periodic data as possible.
 
