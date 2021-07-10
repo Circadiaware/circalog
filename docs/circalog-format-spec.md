@@ -6,7 +6,7 @@ The specification is intended as a working document for now, it is subject to ch
 
 The database can be implemented in SQLite. The app should implement a native SQLite <--> CSV import/export function, to natively support not only exports/backups but also imports and merging, if possible the CSV should be a single file to ease exports and backups by non technical users (can easily be sent via e-mail).
 
-Draft version: 0.6.0
+Draft version: 0.6.1
 
 ## SQL relationships diagram
 
@@ -121,7 +121,7 @@ String type of variable length. Stores any textual comment the user wish to spec
 
 #### additional_data
 
-String field with variable length and a separator (default: |, example: light-`intensity=143|geo=143;12`). Can store additional meta-data from the device's sensors, such as geolocation or light sensor, however note that it is likely better to store sensors data in a distinct punctual event record with its own event_type, because then the start_time will be much more accurate, as the start_time of a record can be modified retroactively by the user, so it may not necessarily correspond to the time the sensor data was collected (eg, tapped sleep button at 8pm, but finally really slept at 11pm, the light sensor data corresponds to 8pm when the button was tapped but then the user modifies the start_time of the sleep session to 11pm to correspond to what happened, but the light sensor data has no timing information, it always relates to the start_time -- hence it's better to just store sensor data separately as we know for sure when the sensor data was collected). Can also be used to import additional meta-data from other sleep diary apps that do not fit in other fields. Optional field, may be made uneditable depending on the app's purposes if data in this field is only automatically acquired.
+String field with variable length to store JSON formatted data. Can store additional meta-data from the device's sensors, such as geolocation or light sensor, however note that it is likely better to store sensors data in a distinct punctual event record with its own event_type, because then the start_time will be much more accurate, as the start_time of a record can be modified retroactively by the user, so it may not necessarily correspond to the time the sensor data was collected (eg, tapped sleep button at 8pm, but finally really slept at 11pm, the light sensor data corresponds to 8pm when the button was tapped but then the user modifies the start_time of the sleep session to 11pm to correspond to what happened, but the light sensor data has no timing information, it always relates to the start_time -- hence it's better to just store sensor data separately as we know for sure when the sensor data was collected). Can also be used to import additional meta-data from other sleep diary apps that do not fit in other fields. Optional field, may be made uneditable depending on the app's purposes if data in this field is only automatically acquired.
 
 ### Table: event_type
 
@@ -151,7 +151,7 @@ String type of variable length. Stores any textual comment the user wish to spec
 
 #### additional_data
 
-String field with variable length and a separator (default: |). Stores additional data such as color for plots, or alternative labels for fields such as pre_start_time (bedtime), start_time (fall asleep time), end_time (wake up time) and post_start_time (out of bed time) and the default values (eg, pre_start_time = 15min before start_time) to improve user experience.
+String field with variable length to store JSON formatted data. Stores additional data such as color for plots, or alternative labels for fields such as pre_start_time (bedtime), start_time (fall asleep time), end_time (wake up time) and post_start_time (out of bed time) and the default values (eg, pre_start_time = 15min before start_time) to improve user experience.
 
 ### tags
 
@@ -179,7 +179,7 @@ String of variable length. Additional description for the tag. Very helpful for 
 
 #### additional_data
 
-String field with variable length and a separator (default: |). Stores additional data that the user may be able to specify in the app or data from imports from other sleep diary formats that cannot fit elsewhere.
+String field with variable length to store JSON formatted data. Stores additional data that the user may be able to specify in the app or data from imports from other sleep diary formats that cannot fit elsewhere.
 
 ### Table: tap
 
@@ -263,7 +263,7 @@ Boolean. Inverts the rating range.
 
 #### additional_data
 
-String of variable length and with a separator (default: | , eg: rating-labels=worst;bad;average;good;best|other-data=data1;data2). Used to store additional data such as rating range labels (eg, instead of rating sleep quality from 0 to 10, rate as "Not at all rested";"Slightly rested"; "Somewhat rested" etc as in the [Consensus Sleep Diary](https://doi.org/10.5665/sleep.1642)). Can also be used to store data from imported sleep diaries from other softwares that do not fit elsewhere.
+String field with variable length to store JSON formatted data (eg: `{ rating-labels: [worst, bad, average, good, best], other-data: [data1, data2] }` ). Used to store additional data such as rating range labels (eg, instead of rating sleep quality from 0 to 10, rate as "Not at all rested", "Slightly rested", "Somewhat rested", etc as in the [Consensus Sleep Diary](https://doi.org/10.5665/sleep.1642)). Can also be used to store data from imported sleep diaries from other softwares that do not fit elsewhere.
 
 #### comment
 
