@@ -4,7 +4,9 @@ The purpose of Circalog is to store any kind of circadian periodic schedule data
 
 The specification is intended as a working document for now, it is subject to change depending on the needs that arise during software development.
 
-Draft version: 0.5.2
+The database can be implemented in SQLite. The app should implement a native SQLite <--> CSV import/export function, to natively support not only exports/backups but also imports and merging, if possible the CSV should be a single file to ease exports and backups by non technical users (can easily be sent via e-mail).
+
+Draft version: 0.5.3
 
 ## Fields
 
@@ -32,7 +34,7 @@ Link to event_type's id. Defines what type of event this entry is registering. E
 
 #### start_time
 
-Standard datetime format with timezone. Registers when time an event started, as defined by the user's inputs. Example for sleep: this is the fall asleep time. Mandatory.
+Standard datetime format with timezone. Registers when time an event started, as defined by the user's inputs. Example for sleep: this is the fall asleep time. Mandatory. For special event types such as smartphone sensors (eg, light sensor, location), start_time is automatically set to the current time and cannot be modified.
 
 #### end_time
 
@@ -56,11 +58,13 @@ String type of variable length. Stores any textual comment the user wish to spec
 
 #### additional_data
 
-String field with variable length and a separator (default: |, example: light-`intensity=143|geo=143;12`). Stores additional meta-data from the device's sensors, such as geolocation or light sensor. Can also be used to import additional meta-data from other sleep diary apps that do not fit in other fields. Optional field, may be made uneditable depending on the app's purposes if data in this field is only automatically acquired.
+String field with variable length and a separator (default: |, example: light-`intensity=143|geo=143;12`). Can store additional meta-data from the device's sensors, such as geolocation or light sensor, however note that it is likely better to store sensors data in a distinct punctual event record with its own event_type, because then the start_time will be much more accurate, as the start_time of a record can be modified retroactively by the user, so it may not necessarily correspond to the time the sensor data was collected (eg, tapped sleep button at 8pm, but finally really slept at 11pm, the light sensor data corresponds to 8pm when the button was tapped but then the user modifies the start_time of the sleep session to 11pm to correspond to what happened, but the light sensor data has no timing information, it always relates to the start_time -- hence it's better to just store sensor data separately as we know for sure when the sensor data was collected). Can also be used to import additional meta-data from other sleep diary apps that do not fit in other fields. Optional field, may be made uneditable depending on the app's purposes if data in this field is only automatically acquired.
 
 ### Table: event_type
 
 This table stores all the available event types, that the user can freely modify.
+
+The app can implement undeletable event types for smartphone sensors by default. Recording these special events can only be at current time (non modifiable) and are of punctual type.
 
 #### id
 
@@ -201,6 +205,26 @@ String of variable length and with a separator (default: | , eg: rating-labels=w
 #### comment
 
 String of variable length. Stores either comments to complement the range rating with `open_ended == false`, or is the only thing displayed when `open_ended == true`.
+
+### (WIP) Table: sync
+
+This table stores links to the records in other tables that were changed since last synchronization with other devices, in order to avoid the need to transmit the full csv database dump and hence reduce data consumption and time to transfer.
+
+This is only going to be implemented far into the future, after all other features, since synchronization will be possible de facto by manual export/import. The sync feature requires the development of a server to connect the devices. The data should be encrypted from end-to-end (E2EE), and the devices should be able to connect to each others using a QR code. There are two ways to implement the server depending on the functionalities we want:
+
+* either the server can only serve as a connection relay for the devices to connect to each others in P2P, but then no data passes through the relay server. The advantage is that the server will use much less resources since it won't store any data, so it will be able to handle a lot more users, and can likely be hosted for free or on a low cost server. Another advantage is that it's better in terms of privacy since no private data (even encrypted ones) ever transit through the server. The disadvantage is that to synchronize devices, they need to be all connected to internet at the same time, so the synchronization cannot happen in the background, it will be an active process (ie, the user opens the synchronization tab in the app on all devices, the update is then handled automagically). This would be similar to ShareDrop.io, magic-wormhole and other similar filesharing web apps.
+
+* either the server can store temporarily the encrypted data and relay it to other devices when they connect. This would be similar to XBrowserSync. Advantage is that devices can still synchronize even when they are not connected at the same time, and synchronization can happen in the background automatically without any user interaction. Disadvantage is that it's going to be difficult to know which device need updates (ie, do we keep the data until all devices connected at least once? But then if a device was created but then deleted or never used again such as eg, an old phone, the data will stay forever on the server), and more importantly that the server will need to have storage space, so it will be much more costly to host and will scale much more poorly with a greater number of users, although databases are usually pretty small (and we can cap a limit just like XBrowserSync, professional users can self-host the open-source server).
+
+#### table_name
+
+String of the name of the table of the modified/created record.
+
+#### id
+
+Unique id of the modified/created record since last sync.
+
+When syncing, the app can use `table_name` and `id` to build a subset of records that are new/modified by fetching the records from the referenced table and id, and then send a reduced CSV export of just this subset of records.
 
 ## SQL relationships diagram
 
