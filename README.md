@@ -2,7 +2,7 @@
 
 <p align="center"><img src="docs/circalog-logo.svg" title="Circalog-logo" alt="" data-align="center"></p>
 
-(WIP) An easy cross-platfrm logger for daily circadian/periodic events. Stop guessing, start understanding.
+(WIP) An easy cross-platform logger for daily circadian/periodic events. Stop guessing, start understanding.
 
 <p align="center"><img src="docs/circalog-mockup-app-penpot.png" title="Circalog-mockup-app-penpot" alt="" data-align="center"></p>
 
@@ -16,4 +16,4 @@ The app will be developed with react-native and typescript. Database will likely
 
 Circalog sleep diary format specification, intended to be generic to store a maximum of pertinent data for any kind of circadian periodic event, is readable here: https://github.com/Circadiaware/circalog/blob/main/docs/circalog-format-spec.md
 
-An [interactive mock-up app](https://design.penpot.app/#/view/441c1550-c424-11eb-8557-f55ab9adbb41/d0e73e20-e124-11eb-a77a-195c36c76d76?token=42eqNw4QBfdJNSiw-eeueg&index=0) is available on Penpot (the screenshot above is of this mock-up app).
+An [interactive mock-up app](https://design.penpot.app/#/view/441c1550-c424-11eb-8557-f55ab9adbb41/d0e73e20-e124-11eb-a77a-195c36c76d76?token=42eqNw4QBfdJNSiw-eeueg&index=0) is available on Penpot (the screenshot above is of this mock-up app). Please use Chrome based browsers, as there is [an issue](https://github.com/penpot/penpot/issues/1081) with Firefox based browser currently which makes the text not display correctly.
