@@ -471,6 +471,8 @@ Standard UTC datetime format. Serves as a merge conflicts detector. In case the 
 
 * There are several junction tables. In the past, the model was aimed to be simpler, without junction tables, but this led to several limitations, such as the inability to assign multiple subquestion types to multiple event types. Another major issue was that searching and filtering through metadata such as tags or subquestions responses was difficult and unoptimized. With junction tables, it's [a simple SQL query](https://stackoverflow.com/a/13970688) that can be automatically optimized by the relational engine. Furthermore, the SQL will automatically manage edge cases such as cascading deletion thanks to foreign keys. So the schema is a bit more complicated, but much more simpler to use and program. However, due to the complexity, exports will likely be mainly in sqlite format, not CSV anymore, but this will also ease post-processing as linking fields between tables will be much easier through SQL with data processing libraries than with CSV which requires text manipulations (and which can often get mangled due to encoding issues...), since sqlite is a binary format.
 
+* There needs to be an option to reset the database of events, subquestions and tags records, but not types. This will be very useful for experimenters, so they can reuse the same device over and over again with multiple patients, very quickly by just erasing the records but not the configuration.
+
 ## Other standard sleep diary specifications
 
 * [Consensus Sleep Diary](https://doi.org/10.5665/sleep.1642). If possible, Circalog should be a superset, and allow implementation of all 3 variants of the Consensus Sleep Diary.
