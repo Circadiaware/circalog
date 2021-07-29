@@ -225,6 +225,8 @@ String of variable length. Additional description for the tag. Very helpful for 
 
 Blob field with variable length to store JSON formatted data. Stores additional data that the user may be able to specify in the app or data from imports from other sleep diary formats that cannot fit elsewhere.
 
+For tags, this could store an option "milestone", which would describe if the tag should be displayed as a whole-day  start or end of a milestone (ie, a vertical line in the sleep graph to delimit the period before the milestone and after).
+
 ### Table: tag
 
 Junction table to create a many-to-many connection between `event`s and `tag_type`s. Stores all selected tags for a given `event`.
