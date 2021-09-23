@@ -8,7 +8,7 @@ The specification is intended as a working document for now, it is subject to ch
 
 The database can be implemented in SQLite. The app should implement a native SQLite import/export/merge function, to natively support not only exports/backups but also imports and merging using a standard file format that is easy to load for post-processing data analysis. The export should be in a single file if possible, to ease exports and backups by non technical users (can easily be sent via e-mail). In the future, import/export in CSV or JSON may be possible but is not a priority. However, import from Sleepmeter CSV file format will be implemented.
 
-Draft version: 0.7.0
+Draft version: 0.7.1
 
 ## SQL relationships diagram
 
@@ -162,6 +162,8 @@ String type of variable length. Stores any textual comment the user wish to spec
 #### additional_data
 
 Blob field with variable length to store JSON formatted data. Can store additional meta-data from the device's sensors, such as geolocation or light sensor, however note that it is likely better to store sensors data in a distinct punctual event record with its own event_type, because then the start_time will be much more accurate, as the start_time of a record can be modified retroactively by the user, so it may not necessarily correspond to the time the sensor data was collected (eg, tapped sleep button at 8pm, but finally really slept at 11pm, the light sensor data corresponds to 8pm when the button was tapped but then the user modifies the start_time of the sleep session to 11pm to correspond to what happened, but the light sensor data has no timing information, it always relates to the start_time -- hence it's better to just store sensor data separately as we know for sure when the sensor data was collected). Can also be used to import additional meta-data from other sleep diary apps that do not fit in other fields. Optional field, may be made uneditable depending on the app's purposes if data in this field is only automatically acquired.
+
+For duration fields, **holes** timings can be stored here, as a sequence of minutes relative to the start and end of the current session, similar to Sleepmeter format, eg, 10-20, 20-30, etc. Holes are very important to increase the accuracy of the sleep diary, of sleep fragmentation and of sleep duration, and it's much more convenient than linked sessions which is rather geared towards siestas or sleep sessions with a wide hole, but not lots of tiny holes. Also, it's easier to estimate the duration of a hole (eg, the user remembers waking up for about 10 minutes) than the exact timing when it happened (actigraphy is better indicated for this purpose, but the goal here is to at least know there were fragmentations, and it should be very easy for the user to input them).
 
 ### Table: event_type
 
