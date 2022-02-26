@@ -8,7 +8,7 @@ The specification is intended as a working document for now, it is subject to ch
 
 The database can be implemented in SQLite. The app should implement a native SQLite import/export/merge function, to natively support not only exports/backups but also imports and merging using a standard file format that is easy to load for post-processing data analysis. The export should be in a single file if possible, to ease exports and backups by non technical users (can easily be sent via e-mail). In the future, import/export in CSV or JSON may be possible but is not a priority. However, import from Sleepmeter CSV file format will be implemented.
 
-Draft version: 0.7.1
+Draft version: 0.7.2
 
 ## SQL relationships diagram
 
@@ -16,7 +16,7 @@ Relational database diagram via Mermaid:
 
 ![Circalog SQL diagram via Mermaid](circalog-format-spec-sql-diagram-mermaid.svg)
 
-Source code (use [Mark Text](https://marktext.app/) to display and modify interactively, [GitHub is lagging behind in implementing Mermaid](https://github.community/t/feature-request-support-mermaid-markdown-graph-diagrams-in-md-files/1922)):
+Source code (use [Mark Text](https://marktext.app/) to display and modify interactively, [GitHub is lagging behind in implementing Mermaid](https://github.community/t/feature-request-support-mermaid-markdown-graph-diagrams-in-md-files/1922), use [Mermaid Live Editor](https://mermaid.live/edit) online to generate a SVG):
 
 ```mermaid
 classDiagram
@@ -89,7 +89,7 @@ subquestion_type : String name
 subquestion_type : String text
 subquestion_type : Boolean open_ended
 subquestion_type : Boolean rating_range_invert
-subquestion_type : String_varlength comment
+subquestion_type : popup
 subquestion_type : Blob additional_data
 
 subquestion_event_types_junction : Hash id %% unique key
@@ -104,12 +104,19 @@ subquestion : Link subquestion_type_id %% foreign key
 subquestion : Datetime created_on
 subquestion : Datetime last_change
 subquestion : Blob value
+subquestion_type : String_varlength comment
 subquestion : Blob additional_data
 
 sync : String table_name
 sync : Link id %% foreign key
 sync : Datetime last_change
 ```
+
+## Design choices
+
+The number of columns should be kept at the minimal amount required to store valuable, non replaceable, non cosmetic information.
+
+Hence, all cosmetic information or parameters, such as subquestions labels, are saved in an `additional_fields` column, present in all tables to store both cosmetic information but also data that may be imported from other sleep diary programs that cannot be imported in another column, so as to not lose data when importing from different sleep diary file specifications.
 
 ## Fields descriptions
 
@@ -361,9 +368,17 @@ Integer. Maximum rating. If `rating_range_max` is 1 and `rating_range_min` is 0,
 
 Boolean. Inverts the rating range.
 
-#### comment
+#### popup
 
-String of variable length. Stores either comments to complement the range rating with `open_ended == false`, or is the only thing displayed when `open_ended == true`.
+Integer. Allows to select between 3 options:
+
+* 0: do not show any pop-up, the user must manually open an `event` entry to answer this subquestion type.
+
+* 1: show a popup with the question to answer when tapping to start the recording (eg, when going to bed).
+
+* 2: show a popup when tapping to end the recording (eg, when waking up).
+
+* 3: show a popup when tapping to start the next recording of the same `event_type` (eg, when going to bed the next night, a question to ask "How did you feel today?" will popup and the answer will be recorded on the previous night's `event` record -- in other words this allows to record delayed subquestions answers).
 
 #### additional_data
 
@@ -396,6 +411,10 @@ Standard UTC datetime.
 #### value
 
 Blob data field storing the user's response to the subquestion.
+
+#### comment
+
+String of variable length. Stores either comments to complement the range rating with `subquestion_type.open_ended == false`, or is the only thing displayed when `open_ended == true`.
 
 #### additional_data
 
