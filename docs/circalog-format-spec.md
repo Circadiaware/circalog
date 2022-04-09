@@ -16,7 +16,7 @@ Relational database diagram via Mermaid:
 
 ![Circalog SQL diagram via Mermaid](circalog-format-spec-sql-diagram-mermaid.svg)
 
-Source code (use [Mark Text](https://marktext.app/) to display and modify interactively, [GitHub is lagging behind in implementing Mermaid](https://github.community/t/feature-request-support-mermaid-markdown-graph-diagrams-in-md-files/1922), use [Mermaid Live Editor](https://mermaid.live/edit) online to generate a SVG):
+Source code (use [Mark Text](https://marktext.app/) to display and modify interactively, [GitHub is lagging behind in implementing Mermaid](https://github.community/t/feature-request-support-mermaid-markdown-graph-diagrams-in-md-files/1922), use [Mermaid Live Editor](https://mermaid.live/edit) online to generate a SVG - don't forget to enable auto-sync):
 
 ```mermaid
 classDiagram
