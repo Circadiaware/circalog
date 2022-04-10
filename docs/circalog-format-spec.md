@@ -503,6 +503,8 @@ Standard UTC datetime format. Serves as a merge conflicts detector. In case the 
 
 * There needs to be an option to reset the database of events, subquestions and tags records, but not types. This will be very useful for experimenters, so they can reuse the same device over and over again with multiple patients, very quickly by just erasing the records but not the configuration.
 
+* There needs to be an option to toggle silent mode or do not disturb mode when tapping. In Sleepmeter, only the silent mode is available, whereas the do not disturb mode allows to setup some whitelisted numbers in case of emergencies.
+
 ## Other standard sleep diary specifications
 
 * [Consensus Sleep Diary](https://doi.org/10.5665/sleep.1642). If possible, Circalog should be a superset, and allow implementation of all 3 variants of the Consensus Sleep Diary.
