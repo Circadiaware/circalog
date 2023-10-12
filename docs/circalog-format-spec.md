@@ -507,7 +507,7 @@ Standard UTC datetime format. Serves as a merge conflicts detector. In case the 
 
 * There needs to be an option to toggle silent mode or do not disturb mode when tapping. In Sleepmeter, only the silent mode is available, whereas the do not disturb mode allows to setup some whitelisted numbers in case of emergencies.
 
-* When exporting, the order should be: fields structures, tags, parameters, and finally events records. Events records should be exported from the latest to the earliest, so that in case the file gets truncated for any unforeseen reason (eg, app crashing during export), then the user may be able to fully recover their data by combining the truncated export (containing the latest data) with a previous full export with older data. This is what Sleepmeter did and it helped avoids catastrophic failures.
+* When exporting a backup in CSV or JSON, the order should be: fields structures, tags, parameters, and finally events records. Events records should be exported from the latest to the earliest, so that in case the file gets truncated for any unforeseen reason (eg, app crashing during export), then the user may be able to fully recover their data by combining the truncated export (containing the latest data) with a previous full export with older data. This is what Sleepmeter did and it helped avoids catastrophic failures.
 
 ## Other standard sleep diary specifications
 
