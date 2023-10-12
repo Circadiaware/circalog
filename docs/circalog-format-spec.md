@@ -8,7 +8,7 @@ The specification is intended as a working document for now, it is subject to ch
 
 The database can be implemented in SQLite. The app should implement a native SQLite import/export/merge function, to natively support not only exports/backups but also imports and merging using a standard file format that is easy to load for post-processing data analysis. The export should be in a single file if possible, to ease exports and backups by non technical users (can easily be sent via e-mail). In the future, import/export in CSV or JSON may be possible but is not a priority. However, import from Sleepmeter CSV file format will be implemented.
 
-Draft version: 0.7.4
+Draft version: 0.7.5
 
 ## SQL relationships diagram
 
@@ -506,6 +506,8 @@ Standard UTC datetime format. Serves as a merge conflicts detector. In case the 
 * There needs to be an option to reset the database of events, subquestions and tags records, but not types. This will be very useful for experimenters, so they can reuse the same device over and over again with multiple patients, very quickly by just erasing the records but not the configuration.
 
 * There needs to be an option to toggle silent mode or do not disturb mode when tapping. In Sleepmeter, only the silent mode is available, whereas the do not disturb mode allows to setup some whitelisted numbers in case of emergencies.
+
+* When exporting, the order should be: fields structures, tags, parameters, and finally events records. Events records should be exported from the latest to the earliest, so that in case the file gets truncated for any unforeseen reason (eg, app crashing during export), then the user may be able to fully recover their data by combining the truncated export (containing the latest data) with a previous full export with older data. This is what Sleepmeter did and it helped avoids catastrophic failures.
 
 ## Other standard sleep diary specifications
 
