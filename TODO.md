@@ -11,3 +11,12 @@ Additional implementation details to complement the specification:
   * but no 24h chart so cannot correlate start times and end times, and no explicit start time, only based on duration and end time, so very unintuitive to modify an event. also no margin on tapping. and very difficult to modify existing entries.
 * SUPER IDEA: to mimic how it's easy to notice errors and modify on a paper sleep graph, when editing an event, show a previsualization of this event on the sleep graph as well as a few days earlier and later (if available) for context, so it will be much more easy to spot if the event looks alright, and fix mistakes.
 * SUPER IDEA: also do it like calendars: allow to edit directly on sleep graph, to create a new event on a 1h block where the user taps, or if holding on an already existing event, it will open in edit mode. No need to be able to resize as on a computer, but at least to.open the event in edit mode from the sleep graph will make it much easier to modify the sleep graph aposteriori.
+
+* [ ] tapping interface ala track and graph, with recording but bigger button or in fact default when tappinp big square, then a small button to see list, and another to add. So we can do everything from tapping interface.
+    * [ ] Quick short input dialog.
+    * [ ] tapping interface should be a dashboard including graphs, to see everything at a glance. But may bias users, we want a sober input interface for sleep medicine because of cognitive hyperstimulation hypothesis.
+    * [ ] editing events on graph: tap a bar on graph and it opens the relevant event. Allows to edit semi-visually, mimicking a paper sleep graph.
+
+* [ ] at first startup, ask user to estimate the average time they take to fall asleep once they really try or taf the app (they can change later but it's important for accurate estimation of sleep duration and fragmentation). And same for wake up (usually it's the same time).
+* [ ] flutterflow?
+* [ ] inspiration ui for questions maybe? https://gitlab.com/zerodogg/org.zerodogg.migraineLog
