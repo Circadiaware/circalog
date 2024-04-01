@@ -16,6 +16,7 @@ Additional implementation details to complement the specification:
     * [ ] Quick short input dialog.
     * [ ] tapping interface should be a dashboard including graphs, to see everything at a glance. But may bias users, we want a sober input interface for sleep medicine because of cognitive hyperstimulation hypothesis.
     * [ ] editing events on graph: tap a bar on graph and it opens the relevant event. Allows to edit semi-visually, mimicking a paper sleep graph.
+    * [ ] add on tapping/dashboard page some charts: daily duration histogram + hour of starting line (so a 2 axis graph, in one chart) for light therapy exposure, this is extremely useful to monitor and correct light therapy usage.
 
 * [ ] at first startup, ask user to estimate the average time they take to fall asleep once they really try or taf the app (they can change later but it's important for accurate estimation of sleep duration and fragmentation). And same for wake up (usually it's the same time).
 * [ ] flutterflow?
