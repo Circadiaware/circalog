@@ -21,3 +21,12 @@ Additional implementation details to complement the specification:
 * [ ] at first startup, ask user to estimate the average time they take to fall asleep once they really try or taf the app (they can change later but it's important for accurate estimation of sleep duration and fragmentation). And same for wake up (usually it's the same time).
 * [ ] flutterflow?
 * [ ] inspiration ui for questions maybe? https://gitlab.com/zerodogg/org.zerodogg.migraineLog
+
+* [ ] circalog update mock up app to add (inspired by Track & Graph):
+    * [ ] when tap on a sleep bar, links to edit the event
+    * [ ] overhaul the tapping dashboard to add two mini-buttons on each event type: one button to add a new record directly, and one to view list of records.
+    * [ ] add on tapping/dashboard page some charts: daily duration histogram + start time, points diamonds and line (so a 2 axis graph, in one chart) for light therapy exposure, this is extremely useful to monitor and correct light therapy usage.
+    * [ ] subtype of event?
+    * [ ] quick dialog show tags in alphabetical order on multiple lines, allow scrolling
+    * [ ] quick dialog place ok and cancel button always reachable so the user can quickly just accept or delete without having to scroll
+          
