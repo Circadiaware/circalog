@@ -31,3 +31,5 @@ Additional implementation details to complement the specification:
     * [ ] quick dialog show tags in alphabetical order on multiple lines, allow scrolling
     * [ ] quick dialog place ok and cancel button always reachable so the user can quickly just accept or delete without having to scroll
           
+* [ ] Use either dart flutter, or react-native. Or Tauri?
+    * [ ] Consider https://github.com/tamagui/tamagui for same styling 100% parity between react-web and react-native
